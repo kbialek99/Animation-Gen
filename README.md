@@ -40,16 +40,13 @@ Before you begin, ensure you have the necessary components downloaded from this 
 
 ### Example:
 
-**Input:**
-![Input Image](./example/input.png)
-
-**Output:**
-![Output Image](./example/output.png)
+**Input:**                          **Output:**
+![Input Image](./example/input.png) ![Output Image](./example/output.png)
 
 
 ### Result Animation:
 
-![Output animation](.example/outputanim.gif)
+![Output animation](./example/outputanim.gif)
 
 **Observations:**
 - Limb placement accuracy contributes to decent animations.

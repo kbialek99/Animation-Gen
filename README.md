@@ -15,8 +15,8 @@ Before you begin, ensure you have the necessary components downloaded from this 
 1. Download Blender.
 2. Find a rigged .obj character you like (or create one).
 3. Upload the character to Mixamo, download a preferred animation.
-4. Follow a recommended Blender tutorial (video link provided in the repository).
-   - Note: If rotation is challenging, set up multiple cameras for different views.
+4. Follow a recommended Blender tutorial ([I used this one](https://www.youtube.com/watch?v=l1Io7fLYV4o)).
+   - Note: If rotation is challenging, set up multiple cameras for different views, and change main camera per angle instead.
 5. Use a black background for rendered images instead of transparency for optimal Openpose processor performance.
 6. Check the lighting, ensuring the model is well-lit and visible. Adjust as needed.
 7. After confirming Openpose performance, you can revert the background to transparency.

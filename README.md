@@ -40,18 +40,18 @@ Before you begin, ensure you have the necessary components downloaded from this 
 
 ### Example:
 
-**Input:**                          **Output:**
-![Input Image](./example/input.png) ![Output Image](./example/output.png)
+| **Input** | **Output**|
+|:---:|:---:|
+|<img src="./example/input.png" alt="Input Image" width="400"> | <img src="./example/output.png" alt="Output Image" width="400">|
 
+### Result Animation
 
-### Result Animation:
-
-![Output animation](./example/outputanim.gif)
+<img src="./example/outputanim.gif" alt="Output Animation" width="400"> 
 
 **Observations:**
+
 - Limb placement accuracy contributes to decent animations.
 - Some features defined in the prompt might be ignored, but this is mitigated if the input image aligns with prompt features.
 - Manual adjustments may be required for each frame.
 
 Feel free to experiment and tailor the settings to achieve your desired animation outcomes!
-

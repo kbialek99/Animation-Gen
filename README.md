@@ -1,44 +1,39 @@
 # Animation Generating Walkthrough
 
-## Overview
+This is a set of nodes and workflows that allows the user to generate animation in the desired number of frames using InvokeAI.
 
-This repository provides a set of nodes and workflows to facilitate the generation of animations using InvokeAI. The primary focus is on creating walk animations for 2D game characters, covering views such as front, back, and side for 4 directional movements. However, the tool can be adapted for generating various animations. This README will guide you through the process, particularly demonstrating the creation of walk animations.
+## What is the general idea?
 
-## How It Works
+When making this i had in mind walk animation for 2D game characters, so that would be generating walk animations from views: front, back, side for 4 directional movement. But to be honest it can be used to generate whatever animation you want. I will show the process of making the walk animation mentioned.
 
-The workflow reads rendered images generated from 3D objects. It utilizes the openpose processor, blending it with the renders frame by frame to produce a GIF, resulting in the desired animation.
+Here is how it works (for now):
+- The workflow reads rendered images that were made based on 3D objects. Then using openpose processor and mixing it with the renders, frame by frame, it outputs the gif of those images resulting in animation of your liking.
 
-## Setup
+## How to set this up
 
-Before you begin, ensure you have the necessary components downloaded from this repository. Additionally, you'll need a Blender scene to generate images representing each frame. Follow these steps:
+So to get those things going, apart from what you can download from this repo, you will need a blender scene that will generate the images representing each frame. I recommend this [video](https://www.youtube.com/watch?v=l1Io7fLYV4o).
 
+To sum this up here are the steps you need to follow:
 1. Download Blender.
-2. Find a rigged .obj character you like (or create one).
-3. Upload the character to Mixamo, download a preferred animation.
-4. Follow a recommended Blender tutorial ([I used this one](https://www.youtube.com/watch?v=l1Io7fLYV4o)).
-   - Note: If rotation is challenging, set up multiple cameras for different views, and change main camera per angle instead.
-5. Use a black background for rendered images instead of transparency for optimal Openpose processor performance.
-6. Check the lighting, ensuring the model is well-lit and visible. Adjust as needed.
-7. After confirming Openpose performance, you can revert the background to transparency.
+2. Find an .obj witch a RIGGED character that you like (or make one if you can).
+3. Upload it to Mixamo and download an animation of your liking.
+4. Now when you have a 3D model and an animation, follow the video (more or less) I’ve mentioned above. NOTE: If you can’t rotate the model correctly for each angle, you can set up multiple cameras for each view you want and switch between them instead.
+5. TIP: Use black background for the rendered images instead of transparency. The Openpose processor works better this way.
+6. See the output images. Check if the model is well-lit. If the shadows are too dark or some limbs are not well visible it might result in clunky outputs from the Openpose node.
+7. Play around a little bit with the lighting and see what works best for you.
+8. After you check the openpose performance with the selected lightning you can change the background back to transparency.
+9. Now you have the input that is necessary for the workflow. I will explain now, how this thing works and how to tame it.
 
-## Major Steps in the Process
+### Here are the major steps in the process:
+- After reading the image it is sent to openpose processor to generate pose. Please have in mind though that the results are rarely perfect. It depends a lot on the input image and the visibility of the model as well as on the number of frames. If you generate your animation in 10 FPS then the differences between each frame are rather significant. For 60 FPS differences between each consecutive frame are minor. The more frames the clunkier animation you will get from openpose. That’s why we don’t rely that much on it.
+- Before denoising the latent we also pass the raw rendered image into the node.
 
-1. **Image Processing:**
-   - Read the image and send it to the openpose processor to generate a pose.
-   - Note: Openpose results may vary based on input image quality, model visibility, and frame rate.
+### Denoising Start
+As for the Denoising Start you have two options: If you want more consistent animation set the higher value. If you want the AI to be more creative, set it to lower values. 0.4 is a good start. It allows you to generate some clothes from the prompt on the model while keeping the limb placement according to the input image. 0.5 is better when you overpaint some details on the rendered model, so the clothes are more constant between each frame.
 
-2. **Denoising Latent:**
-   - Before denoising, pass the raw rendered image into the node.
-   - Adjust denoising value based on animation preferences.
-     - Higher values for consistent animation.
-     - Lower values for AI creativity (e.g., 0.4 for prompt-based clothes generation, 0.5 for overpainted details).
+This is the main setting that really matters here. The next part of the workflow is face correction. It has a separate prompt so input there info only about the face.
 
-3. **Face Correction:**
-   - A separate prompt for face correction; input facial information here.
-
-## Input-Output Results
-
-### Example:
+### Lets see some input - output results along with some settings
 
 | **Input** | **Output**|
 |:---:|:---:|
@@ -48,10 +43,4 @@ Before you begin, ensure you have the necessary components downloaded from this 
 
 <img src="./example/outputanim.gif" alt="Output Animation" width="400"> 
 
-**Observations:**
-
-- Limb placement accuracy contributes to decent animations.
-- Some features defined in the prompt might be ignored, but this is mitigated if the input image aligns with prompt features.
-- Manual adjustments may be required for each frame.
-
-Feel free to experiment and tailor the settings to achieve your desired animation outcomes!
+As you can see the limb placement is accurate which allows to create pretty decent animations. The main drawback is that some of the features defined in prompt will be ignored. But this is no problem if the input image contains the features described in the prompt. This however will require some manual work for each frame.
